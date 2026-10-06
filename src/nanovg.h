@@ -65,7 +65,9 @@ void nvgViewport(int x, int y, int w, int h);
 void nvgClear(NVGcontext* nvg);
 void nvgClearWithColor(NVGcontext* nvg, NVGcolor col);
 void nvgReadPixels(NVGcontext* nvg, NVGframebuffer* fb, int x, int y, int w, int h, int total_h, void* data);
-void nvgMaxTextureSize(int* size);
+// Writes the backend's maximum 2D texture dimension into `size`. Returns 0 and
+// leaves `size` untouched when the backend cannot report a limit.
+int nvgMaxTextureSize(NVGcontext* ctx, int* size);
 
 typedef struct FONStextRow FONStextRow;  // include fontstash.h to use
 

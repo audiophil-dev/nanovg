@@ -2234,10 +2234,13 @@ void nvgClear(NVGcontext* ctx) {
     glEnable(GL_SCISSOR_TEST);
 }
 
-void nvgMaxTextureSize(int* size) {
-    if (size) {
-        glGetIntegerv(GL_MAX_TEXTURE_SIZE, size);
+int nvgMaxTextureSize(NVGcontext* ctx, int* size) {
+    (void)ctx;
+    if (!size) {
+        return 0;
     }
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, size);
+    return 1;
 }
 
 #endif /* NANOVG_GL_IMPLEMENTATION */

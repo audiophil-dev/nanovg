@@ -700,6 +700,16 @@ void nvgClearWithColor(NVGcontext* ctx, NVGcolor color) {
     mtl.clearBufferOnFlush = YES;
 }
 
+int nvgMaxTextureSize(NVGcontext* ctx, int* size) {
+    MNVGcontext* mtl = MNVG_GET_CONTEXT(ctx);
+    if (mtl == nil || size == NULL) {
+        return 0;
+    }
+    int const max = [mtl renderGetMaxTextureSize];
+    *size = max;
+    return 1;
+}
+
 void nvgReadPixels(NVGcontext* ctx, NVGframebuffer* fb, int x, int y, int width,
                     int height, int total_height, void* data) {
     MNVGcontext* mtl = MNVG_GET_CONTEXT(ctx);
@@ -1792,6 +1802,13 @@ error:
 }
 
 - (int)renderGetMaxTextureSize {
+    NSObject* device = (NSObject*)_metalLayer.device;
+    SEL selector = NSSelectorFromString(@"maxTextureDimension2D");
+    if ([device respondsToSelector:selector]) {
+        NSInteger const size = [[device valueForKey:@"maxTextureDimension2D"] integerValue];
+        if (size > 0)
+            return (int)size;
+    }
     return 8192;
 }
 
