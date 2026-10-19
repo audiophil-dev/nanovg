@@ -64,7 +64,8 @@ int nvgFramebufferImage(NVGframebuffer* fb);
 void nvgViewport(int x, int y, int w, int h);
 void nvgClear(NVGcontext* nvg);
 void nvgClearWithColor(NVGcontext* nvg, NVGcolor col);
-void nvgReadPixels(NVGcontext* nvg, NVGframebuffer* fb, int x, int y, int w, int h, int total_h, void* data);
+// Returns nonzero only when the requested pixels were read into data.
+int nvgReadPixels(NVGcontext* nvg, NVGframebuffer* fb, int x, int y, int w, int h, int total_h, void* data);
 // Writes the backend's maximum 2D texture dimension into `size`. Returns 0 and
 // leaves `size` untouched when the backend cannot report a limit.
 int nvgMaxTextureSize(NVGcontext* ctx, int* size);
